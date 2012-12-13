@@ -17,6 +17,11 @@ import com.couchbase.touchdb.router.TDURLConnection;
 
 public class TouchDBHttpResponse implements HttpResponse, TDRouterCallbackBlock {
 
+    //FIXME no idea what these should do
+	@Override public String getETag() { return null; }
+    ///////
+
+
     private TDURLConnection conn;
     private TDRouter router;
     private InputStream is;
@@ -53,7 +58,7 @@ public class TouchDBHttpResponse implements HttpResponse, TDRouterCallbackBlock 
     }
 
     @Override
-    public int getContentLength() {
+    public long getContentLength() {
         getContent();
         return conn.getContentLength();
     }

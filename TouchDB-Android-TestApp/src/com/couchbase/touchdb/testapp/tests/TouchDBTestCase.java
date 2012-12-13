@@ -14,7 +14,7 @@ import java.util.Properties;
 
 import junit.framework.Assert;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import android.test.InstrumentationTestCase;
 import android.util.Base64;

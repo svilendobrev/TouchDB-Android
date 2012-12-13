@@ -491,7 +491,8 @@ public class TDView {
         argsList.add(Integer.toString(options.getLimit()));
         argsList.add(Integer.toString(options.getSkip()));
 
-        Log.v(TDDatabase.TAG, "Query " + name + ": " + sql);
+        Log.v(TDDatabase.TAG, "Query " + name + ": " + sql + " ;; " + argsList);
+
 
         Cursor cursor = db.getDatabase().rawQuery(sql,
                 argsList.toArray(new String[argsList.size()]));

@@ -2,7 +2,7 @@ package com.couchbase.touchdb.testapp.tests;
 
 import junit.framework.Assert;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import android.test.AndroidTestCase;
 import android.util.Log;

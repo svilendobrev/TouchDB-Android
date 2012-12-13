@@ -7,6 +7,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import java.util.Map;
+
 import org.ektorp.http.HttpClient;
 import org.ektorp.http.HttpResponse;
 import org.ektorp.util.Exceptions;
@@ -19,6 +21,12 @@ import com.couchbase.touchdb.router.TDRouter;
 import com.couchbase.touchdb.router.TDURLConnection;
 
 public class TouchDBHttpClient implements HttpClient {
+
+    //FIXME no idea what these should do
+	@Override public HttpResponse copy(String sourceUri, String destination) { return null; }
+    @Override public HttpResponse get(String uri, Map<String, String> headers) { return get( uri); }
+    ///////
+
 
     private TDServer server;
 

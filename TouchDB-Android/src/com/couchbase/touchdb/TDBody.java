@@ -20,7 +20,7 @@ package com.couchbase.touchdb;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.map.ObjectWriter;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 import android.util.Log;
 
