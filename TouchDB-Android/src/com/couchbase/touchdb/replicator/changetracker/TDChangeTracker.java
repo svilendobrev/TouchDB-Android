@@ -37,6 +37,8 @@ import android.util.Log;
 import com.couchbase.touchdb.TDDatabase;
 import com.couchbase.touchdb.TDServer;
 
+import android.os.SystemClock;
+
 /**
  * Reads the continuous-mode _changes feed of a database, and sends the
  * individual change entries to its client's changeTrackerReceivedChange()
@@ -184,10 +186,18 @@ public class TDChangeTracker implements Runnable {
                     Log.w(TDDatabase.TAG, "Unable to parse user info, not setting credentials");
                 }
             }
-
+            HttpResponse response;
             try {
                 Log.v(TDDatabase.TAG, "Making request to " + getChangesFeedURL().toString());
-                HttpResponse response = httpClient.execute(request);
+                response = httpClient.execute(request);
+            //svd
+            } catch (IOException e) {
+                Log.e(TDDatabase.TAG, "Change tracker cannot connect. will retry after 3s", e);
+                SystemClock.sleep( 3000); // stop();
+                continue;
+            }
+
+            try {
                 StatusLine status = response.getStatusLine();
                 if(status.getStatusCode() >= 300) {
                     Log.e(TDDatabase.TAG, "Change tracker got error " + Integer.toString(status.getStatusCode()));
@@ -228,6 +238,8 @@ public class TDChangeTracker implements Runnable {
                     Log.e(TDDatabase.TAG, "IOException in change tracker", e);
                 }
             }
+            //svd
+            SystemClock.sleep( 300);
         }
         Log.v(TDDatabase.TAG, "Change tracker run loop exiting");
     }
