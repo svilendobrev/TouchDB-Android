@@ -79,9 +79,11 @@ public class TDPuller extends TDReplicator implements TDChangeTrackerClient {
             return;
         }
 
-        changeTracker.setClient(null);  // stop it from calling my changeTrackerStopped()
-        changeTracker.stop();
-        changeTracker = null;
+        if (changeTracker != null) {    //XXX when connect fails @fetchRemoteCheckpointDoc ... maybe running=true should be only after that succeeds?
+            changeTracker.setClient(null);  // stop it from calling my changeTrackerStopped()
+            changeTracker.stop();
+            changeTracker = null;
+        }
 
         synchronized(this) {
             revsToPull = null;
@@ -89,15 +91,16 @@ public class TDPuller extends TDReplicator implements TDChangeTrackerClient {
 
         super.stop();
 
-        downloadsToInsert.flush();
+        if (downloadsToInsert != null)
+            downloadsToInsert.flush();
     }
 
     @Override
     public void stopped() {
-
-        downloadsToInsert.flush();
-        downloadsToInsert.close();
-
+        if (downloadsToInsert != null) {
+            downloadsToInsert.flush();
+            downloadsToInsert.close();
+        }
         super.stopped();
     }
 
